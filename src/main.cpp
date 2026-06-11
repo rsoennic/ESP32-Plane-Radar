@@ -14,8 +14,6 @@
 #include "ui/radar_range.h"
 #include "ui/status_screens.h"
 
-testError
-
 namespace {
 
 bool g_radar_visible = false;
