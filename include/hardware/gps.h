@@ -8,6 +8,15 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 
+// Default NMEA GPS interface pins for the ESP32-C3 Super Mini UART1 port.
+enum {
+  GPS_UART1_TX_PIN = 21,
+  GPS_UART1_RX_PIN = 20
+};
+
+// Maximum time to wait for a valid GPS fix before falling back to the normal location path.
+#define GPS_FIX_TIMEOUT_MS 10000UL
+
 // Small adapter used to read bytes from any NMEA GPS source.
 // The caller can provide a UART/Stream wrapper via this struct.
 typedef struct {

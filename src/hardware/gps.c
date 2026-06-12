@@ -1,5 +1,6 @@
-#include "gps.h"
+#include "hardware/gps.h"
 
+#include <Arduino.h>
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
@@ -174,6 +175,11 @@ static void process_line(const char* line) {
 
 // Attach the byte source that will feed the GPS parser.
 void gps_begin(gps_serial_t* serial) {
+  // Configure the default UART1 GPS pins on the ESP32-C3 Super Mini.
+  pinMode(GPS_UART1_RX_PIN, INPUT);
+  pinMode(GPS_UART1_TX_PIN, OUTPUT);
+
+  // Keep the serial backend available for the later NMEA reader hookup.
   g_serial = serial;
   g_line_len = 0;
   g_fix.valid = false;
