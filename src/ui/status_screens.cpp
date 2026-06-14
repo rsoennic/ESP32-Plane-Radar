@@ -215,7 +215,7 @@ void statusScreenPortal() {
       {config::kPortalApName, 1.12f, &kPortalGfxEmphasis},
       {"2. Open in browser:", 1.05f, &kPortalGfxBody},
       {config::kPortalHostUrl, 1.12f, &kPortalGfxEmphasis},
-      {"or 192.168.4.1", 1.0f, &kPortalGfxBody},
+      {"or 192.168.0.108", 1.0f, &kPortalGfxBody},
   };
   drawTextBlock(config::kColorYellow, config::kTextOnYellow, lines,
                 sizeof(lines) / sizeof(lines[0]));
