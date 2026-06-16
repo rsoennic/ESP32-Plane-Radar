@@ -8,7 +8,7 @@ namespace config {
 
 // --- Wi-Fi portal ---
 constexpr char kPortalApName[] = "PlaneRadar-Setup";
-constexpr char kPortalIp[] = "192.168.4.1";
+constexpr char kPortalIp[] = "192.168.0.108";
 /** mDNS host (no ".local" suffix); browser: http://plane-radar.local */
 constexpr char kPortalHostname[] = "plane-radar";
 constexpr char kPortalHostUrl[] = "plane-radar.local";
