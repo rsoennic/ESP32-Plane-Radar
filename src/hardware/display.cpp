@@ -9,5 +9,8 @@ void displayInit() {
   tft.setRotation(0);
   tft.setBrightness(255);
   tft.setTextWrap(false);
+#if defined(BOARD_SEEED_XIAO)
+  tft.setRotation(3);
+#endif
   displayFontInit();
 }
