@@ -68,6 +68,14 @@ constexpr gpio_num_t kDisplayPinCs  = GPIO_NUM_3;    // D1/GPIO 3
 constexpr gpio_num_t kDisplayPinDc  = GPIO_NUM_5;    // D3/GPIO 5
 constexpr gpio_num_t kDisplayPinMosi = GPIO_NUM_10;  // XIAO SPI MOSI
 constexpr gpio_num_t kDisplayPinSclk = GPIO_NUM_8;   // XIAO SPI SCK
+// CST816S capacitive touch (I2C). A tap cycles the range preset (no BOOT button).
+constexpr gpio_num_t kTouchPinSda = GPIO_NUM_6;
+constexpr gpio_num_t kTouchPinScl = GPIO_NUM_7;
+constexpr gpio_num_t kTouchPinInt = GPIO_NUM_20;
+constexpr gpio_num_t kTouchPinRst = GPIO_NUM_NC; // no reset pin on Xiao interface
+constexpr uint8_t kTouchI2cAddr = 0x2E;
+/** Debounce: ignore a repeat tap within this window of the last one. */
+constexpr unsigned long kTouchTapDebounceMs = 250UL;
 #define DISPLAY_HAS_TOUCH 1
 
 #else // BOARD_C3_SUPERMINI (default)

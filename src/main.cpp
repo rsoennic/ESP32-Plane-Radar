@@ -13,6 +13,7 @@
 #include "ui/radar_display.h"
 #include "ui/radar_range.h"
 #include "ui/status_screens.h"
+#include <hardware/touch.h>
 
 namespace {
 
@@ -49,6 +50,12 @@ void handleBootButton() {
   }
 }
 
+void handleTouch() {
+  if (touchConsumeTap()) {
+    onRangeTap();
+  }
+}
+
 void fetchAndDrawAircraft() {
   const float fetch_km = ui::radar::fetchRadiusKm();
   if (!services::adsb::fetchUpdate(services::location::lat(),
@@ -64,11 +71,18 @@ void fetchAndDrawAircraft() {
 
 void setup() {
   Serial.begin(115200);
-  delay(500);
+    // Wait up to 4 seconds for the USB serial port to connect
+//  uint32_t startTime = millis();
+//  while (!Serial && (millis() - startTime < 4000)) {
+    delay(4000);
+ // }
   Serial.println();
   Serial.println("Plane Radar");
 
   bootButtonInit();
+  #ifdef DISPLAY_HAS_TOUCH
+   touchInit();
+  #endif
   displayInit();
   if (wifiShowsSetupScreenOnBoot()) {
     statusScreenPortal();
@@ -84,6 +98,9 @@ void setup() {
 
 void loop() {
   handleBootButton();
+  #ifdef DISPLAY_HAS_TOUCH
+     handleTouch();
+  #endif
   wifiLoop();
 
   if (WiFi.status() != WL_CONNECTED) {
