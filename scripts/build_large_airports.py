@@ -69,10 +69,16 @@ def build_dataset() -> tuple[
 
     large_idents: dict[str, tuple[int, int]] = {}
     for a in airports:
-        if a.get("type") != "large_airport":
-            continue
         ident = (a.get("ident") or "").strip()
         if len(ident) != 4:
+            continue
+        # Include official "large_airport" types, and also include KHIO
+        # explicitly even if it's not marked as a large airport in the
+        # remote CSV.
+        #and ident != "KHIO" and ident != "KSPB" and ident != "KSQL" and ident != "KSHN" and ident != "KVUO" and ident != "KSTS" and ident != "069" and ident != "KDVO" and ident != "0Q3" and ident != "0Q9":
+
+        # Allow both large and small airports, but always include KHIO.
+        if a.get("type") != "large_airport" and ident != "KHIO" and ident != "KSPB" and ident != "KSQL" and ident != "KSHN" and ident != "KSTS" and ident != "O69" and ident != "KDVO" and ident != "0Q3" and ident != "0Q9":
             continue
         lat = coord_e7(a.get("latitude_deg"))
         lon = coord_e7(a.get("longitude_deg"))

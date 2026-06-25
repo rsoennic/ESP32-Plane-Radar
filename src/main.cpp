@@ -74,7 +74,7 @@ void setup() {
     // Wait up to 4 seconds for the USB serial port to connect
 //  uint32_t startTime = millis();
 //  while (!Serial && (millis() - startTime < 4000)) {
-    delay(4000);
+   /// delay(4000);
  // }
   Serial.println();
   Serial.println("Plane Radar");

@@ -195,7 +195,7 @@ void resetWifiCredentials() {
 }
 
 void onConfigPortalApStarted(WiFiManager*) {
-  WiFi.setTxPower(WIFI_POWER_8_5dBm);///ras
+  WiFi.setTxPower(WIFI_POWER_13dBm);//WIFI_POWER_8_5dBm);///ras
  /// WiFi.setSleep(WIFI_PS_MAX_MODEM); ///ras
   statusScreenPortal();
 #ifdef WM_MDNS
@@ -259,7 +259,7 @@ void stopLanWebPortal() {
 }
 
 void prepareSta() {
-  WiFi.setTxPower(WIFI_POWER_8_5dBm);///ras
+  WiFi.setTxPower(WIFI_POWER_13dBm);//WIFI_POWER_8_5dBm);///ras
   ///WiFi.setSleep(WIFI_PS_MAX_MODEM); ///ras
   WiFi.mode(WIFI_STA);
   WiFi.setSleep(WIFI_PS_NONE);

@@ -101,8 +101,11 @@ constexpr bool kDisplayInvert = true;
 constexpr bool kDisplayRgbOrder = true;
 
 // --- Radar center defaults (overridden via WiFi setup portal) ---
-constexpr double kDefaultRadarLat = 45.541313;
-constexpr double kDefaultRadarLon = -122.647316;
+//constexpr double kDefaultRadarLat = 45.541313; // Portland, OR
+//constexpr double kDefaultRadarLon = -122.647316;
+
+constexpr double kDefaultRadarLat = 45.4616;  
+constexpr double kDefaultRadarLon = -122.5142;
 
 /** Poll adsb.fi (API public limit: 1 req/s). */
 constexpr unsigned long kAdsbFetchIntervalMs = 3000;
