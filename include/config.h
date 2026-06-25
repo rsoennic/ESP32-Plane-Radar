@@ -104,8 +104,8 @@ constexpr bool kDisplayRgbOrder = true;
 //constexpr double kDefaultRadarLat = 45.541313; // Portland, OR
 //constexpr double kDefaultRadarLon = -122.647316;
 
-constexpr double kDefaultRadarLat = 45.4616;  
-constexpr double kDefaultRadarLon = -122.5142;
+constexpr double kDefaultRadarLat = 37.51186; //KSQL;  
+constexpr double kDefaultRadarLon = -122.24953;
 
 /** Poll adsb.fi (API public limit: 1 req/s). */
 constexpr unsigned long kAdsbFetchIntervalMs = 3000;
