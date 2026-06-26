@@ -560,6 +560,14 @@ void wifiLoop() {
   }
 }
 
+void wifiPollActivePortal() {
+  if (!s_wm.getWebPortalActive() && !s_wm.getConfigPortalActive()) {
+    return;
+  }
+  bootButtonPollLongPress();
+  s_wm.process();
+}
+
 bool wifiSetupConnect() {
   initBootButton();
   ensureWifiManager();
