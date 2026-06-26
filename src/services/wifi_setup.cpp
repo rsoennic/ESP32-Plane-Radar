@@ -68,15 +68,77 @@ void stopLanWebPortal();
 bool wifiLinkUp();
 
 constexpr int kCoordParamLen = 20;
+constexpr int kNameParamLen = 32;
 constexpr char kCoordInputAttrs[] =
     " type=\"number\" step=\"0.000001\"";
+constexpr char kTextInputAttrs[] = " type=\"text\"";
 
+WiFiManagerParameter s_param_select_0(
+    "<div style=\"margin:1rem 0 0.5rem 0; padding-top:0.5rem; border-top:1px solid #ccc;\">"
+  "<input type=\"radio\" id=\"radar_select_0\" name=\"radar_location_select\" value=\"0\""
+  " onclick=\"radarSetSelected(this.value)\" onchange=\"radarSetSelected(this.value)\"> "
+    "<label for=\"radar_select_0\">Select location 1</label></div>"
+  "<script>(function(){"
+  "window.radarSetSelected=function(v){"
+  "var sel=document.querySelector('input[name=\\\"radar_selected\\\"]');"
+  "if(sel){sel.value=v;}"
+  "};"
+  "function radarInitSelected(){"
+  "var sel=document.querySelector('input[name=\\\"radar_selected\\\"]');"
+  "var v=(sel&&sel.value&&sel.value.length)?sel.value:'0';"
+  "if(sel){sel.value=v;}"
+  "var radios=document.querySelectorAll('input[name=\\\"radar_location_select\\\"]');"
+  "for(var i=0;i<radios.length;i++){radios[i].checked=(radios[i].value===v);}"
+  "}"
+  "if(document.addEventListener){document.addEventListener('DOMContentLoaded', radarInitSelected);}"
+  "setTimeout(radarInitSelected, 0);"
+  "})();</script>");
+WiFiManagerParameter s_param_name("radar_name", "Location name", "", kNameParamLen, kTextInputAttrs);
 WiFiManagerParameter s_param_lat("radar_lat", "Latitude (deg)", "0",
                                 kCoordParamLen, kCoordInputAttrs);
 WiFiManagerParameter s_param_lon("radar_lon", "Longitude (deg)", "0",
                                 kCoordParamLen, kCoordInputAttrs);
 
-char s_miles_checkbox_attrs[32] = "type=\"checkbox\"";
+WiFiManagerParameter s_param_select_1(
+    "<hr><div style=\"margin:1rem 0 0.5rem 0;\">"
+    "<input type=\"radio\" id=\"radar_select_1\" name=\"radar_location_select\" value=\"1\""
+  " onclick=\"radarSetSelected(this.value)\" onchange=\"radarSetSelected(this.value)\"> "
+    "<label for=\"radar_select_1\">Select location 2</label></div>");
+WiFiManagerParameter s_param_name_1("radar_name_1", "Location 2 name", "",
+                                    kNameParamLen, kTextInputAttrs);
+WiFiManagerParameter s_param_lat_1("radar_lat_1", "Latitude 2 (deg)", "",
+                                  kCoordParamLen, kCoordInputAttrs);
+WiFiManagerParameter s_param_lon_1("radar_lon_1", "Longitude 2 (deg)", "",
+                                  kCoordParamLen, kCoordInputAttrs);
+
+WiFiManagerParameter s_param_select_2(
+    "<hr><div style=\"margin:1rem 0 0.5rem 0;\">"
+    "<input type=\"radio\" id=\"radar_select_2\" name=\"radar_location_select\" value=\"2\""
+  " onclick=\"radarSetSelected(this.value)\" onchange=\"radarSetSelected(this.value)\"> "
+    "<label for=\"radar_select_2\">Select location 3</label></div>");
+WiFiManagerParameter s_param_name_2("radar_name_2", "Location 3 name", "",
+                                    kNameParamLen, kTextInputAttrs);
+WiFiManagerParameter s_param_lat_2("radar_lat_2", "Latitude 3 (deg)", "",
+                                  kCoordParamLen, kCoordInputAttrs);
+WiFiManagerParameter s_param_lon_2("radar_lon_2", "Longitude 3 (deg)", "",
+                                  kCoordParamLen, kCoordInputAttrs);
+
+WiFiManagerParameter s_param_select_3(
+    "<hr><div style=\"margin:1rem 0 0.5rem 0;\">"
+    "<input type=\"radio\" id=\"radar_select_3\" name=\"radar_location_select\" value=\"3\""
+  " onclick=\"radarSetSelected(this.value)\" onchange=\"radarSetSelected(this.value)\"> "
+    "<label for=\"radar_select_3\">Select location 4</label></div>");
+WiFiManagerParameter s_param_name_3("radar_name_3", "Location 4 name", "",
+                                    kNameParamLen, kTextInputAttrs);
+WiFiManagerParameter s_param_lat_3("radar_lat_3", "Latitude 4 (deg)", "",
+                                  kCoordParamLen, kCoordInputAttrs);
+WiFiManagerParameter s_param_lon_3("radar_lon_3", "Longitude 4 (deg)", "",
+                                  kCoordParamLen, kCoordInputAttrs);
+
+WiFiManagerParameter s_param_selected("radar_selected", "", "0", 2,
+                                      "type=\"hidden\"");
+
+char s_miles_checkbox_attrs[32] = "type=\"checkbox\" checked";
 WiFiManagerParameter s_param_miles("use_miles", "Display distances in miles", "T", 2,
                                    s_miles_checkbox_attrs, WFM_LABEL_AFTER);
 
@@ -87,10 +149,40 @@ WiFiManagerParameter s_param_runways("show_runways", "Show airport runways", "T"
 void refreshPortalParamDefaults() {
   char lat_buf[kCoordParamLen + 1];
   char lon_buf[kCoordParamLen + 1];
-  snprintf(lat_buf, sizeof(lat_buf), "%.6f", services::location::lat());
-  snprintf(lon_buf, sizeof(lon_buf), "%.6f", services::location::lon());
+  
+  // Set all 4 location coordinate pairs
+  snprintf(lat_buf, sizeof(lat_buf), "%.6f", services::location::latByIndex(0));
+  snprintf(lon_buf, sizeof(lon_buf), "%.6f", services::location::lonByIndex(0));
   s_param_lat.setValue(lat_buf, kCoordParamLen);
   s_param_lon.setValue(lon_buf, kCoordParamLen);
+  
+  snprintf(lat_buf, sizeof(lat_buf), "%.6f", services::location::latByIndex(1));
+  snprintf(lon_buf, sizeof(lon_buf), "%.6f", services::location::lonByIndex(1));
+  s_param_lat_1.setValue(lat_buf, kCoordParamLen);
+  s_param_lon_1.setValue(lon_buf, kCoordParamLen);
+  
+  snprintf(lat_buf, sizeof(lat_buf), "%.6f", services::location::latByIndex(2));
+  snprintf(lon_buf, sizeof(lon_buf), "%.6f", services::location::lonByIndex(2));
+  s_param_lat_2.setValue(lat_buf, kCoordParamLen);
+  s_param_lon_2.setValue(lon_buf, kCoordParamLen);
+  
+  snprintf(lat_buf, sizeof(lat_buf), "%.6f", services::location::latByIndex(3));
+  snprintf(lon_buf, sizeof(lon_buf), "%.6f", services::location::lonByIndex(3));
+  s_param_lat_3.setValue(lat_buf, kCoordParamLen);
+  s_param_lon_3.setValue(lon_buf, kCoordParamLen);
+  
+  // Set all location names
+  s_param_name.setValue(services::location::name(0), kNameParamLen);
+  s_param_name_1.setValue(services::location::name(1), kNameParamLen);
+  s_param_name_2.setValue(services::location::name(2), kNameParamLen);
+  s_param_name_3.setValue(services::location::name(3), kNameParamLen);
+  
+  // Set selected location index in hidden field
+  char selected_buf[3];
+  snprintf(selected_buf, sizeof(selected_buf), "%d",
+           services::location::selectedLocationIndex());
+  s_param_selected.setValue(selected_buf, 2);
+  
   snprintf(s_miles_checkbox_attrs, sizeof(s_miles_checkbox_attrs), "type=\"checkbox\"%s",
            ui::radar::useMiles() ? " checked" : "");
   s_param_miles.setValue("T", 2);
@@ -100,18 +192,54 @@ void refreshPortalParamDefaults() {
 }
 
 void onPortalParamsSaved() {
-  if (!services::location::saveFromStrings(s_param_lat.getValue(),
-                                           s_param_lon.getValue())) {
-    Serial.println("Invalid lat/lon in portal — keeping previous location");
+  services::location::saveNamesFromStrings(s_param_name.getValue(),
+                                           s_param_name_1.getValue(),
+                                           s_param_name_2.getValue(),
+                                           s_param_name_3.getValue());
+
+  Serial.printf("Portal save selected(raw)=%s\n", s_param_selected.getValue());
+
+  if (services::location::saveLatLonsFromStrings(
+          s_param_lat.getValue(), s_param_lon.getValue(),
+          s_param_lat_1.getValue(), s_param_lon_1.getValue(),
+          s_param_lat_2.getValue(), s_param_lon_2.getValue(),
+          s_param_lat_3.getValue(), s_param_lon_3.getValue())) {
+    const int selected_index = atoi(s_param_selected.getValue());
+    if (selected_index >= 0 && selected_index <= 3) {
+      services::location::saveSelectedLocation(selected_index);
+      Serial.printf("Portal save selected=%d active=%.6f,%.6f\n", selected_index,
+                    services::location::lat(), services::location::lon());
+    } else {
+      Serial.printf("Invalid selected location index %d in portal\n",
+                    selected_index);
+    }
+  } else {
+    Serial.println("Invalid location lat/lon in portal — keeping previous location");
   }
+
   ui::radar::saveMilesFromPortal(s_param_miles.getValue());
   ui::radar::saveRunwaysFromPortal(s_param_runways.getValue());
 }
 
 void attachPortalParams(WiFiManager& wm) {
   refreshPortalParamDefaults();
+  wm.addParameter(&s_param_select_0);
+  wm.addParameter(&s_param_name);
   wm.addParameter(&s_param_lat);
   wm.addParameter(&s_param_lon);
+  wm.addParameter(&s_param_select_1);
+  wm.addParameter(&s_param_name_1);
+  wm.addParameter(&s_param_lat_1);
+  wm.addParameter(&s_param_lon_1);
+  wm.addParameter(&s_param_select_2);
+  wm.addParameter(&s_param_name_2);
+  wm.addParameter(&s_param_lat_2);
+  wm.addParameter(&s_param_lon_2);
+  wm.addParameter(&s_param_select_3);
+  wm.addParameter(&s_param_name_3);
+  wm.addParameter(&s_param_lat_3);
+  wm.addParameter(&s_param_lon_3);
+  wm.addParameter(&s_param_selected);
   wm.addParameter(&s_param_miles);
   wm.addParameter(&s_param_runways);
   wm.setSaveParamsCallback(onPortalParamsSaved);
