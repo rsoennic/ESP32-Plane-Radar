@@ -167,7 +167,7 @@ pio device monitor
 Single `.bin` for [esptool-js](https://espressif.github.io/esptool-js/) and similar tools (ESP32-C3, 4 MB, flash at **0x0**):
 
 ```bash
-chmod +x scripts/merge-firmware.sh   # once
+chmod +x scripts/merge-firmware.hs   # once
 ./scripts/merge-firmware.sh
 ```
 
